@@ -1,7 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
+   
+<div class="container-fluid px-2 px-md-4">
+   <div class="page-header min-height-300 border-radius-xl mt-4" style="background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');">
+     <span class="mask  bg-gradient-primary  opacity-6"></span>
+   </div>
+   <div class="card card-body mx-3 mx-md-4 mt-n6">
+      <div class="row gx-4 mb-2">
+        <div class="col-auto">
+         
+        </div>
+      </div>
    <div class="content">
       <div class="container-fluid">
          <div class="row">
@@ -16,21 +26,21 @@
                   </h4>
                   </div>
                   <div class="card-body">
-                    <form method="post" action="{% url 'profile' %}">
+                    <form method="POST" action="{% url 'profileUpdate' %}">
                       {% csrf_token %}
                      <div class="row">
-                        <input type="hidden" class="form-control" name="rowid" required="" value="">
+                        <input type="hidden" class="form-control" name="user_id" required="" value="{{user_detail.id}}">
                         <div class="col-md-6">
                         <div class="input-group input-group-static">
                            <label class="bmd-label-floating">First Name</label>
-                           <input type="text" class="form-control" value="{{firstname}}">
+                           <input type="text" class="form-control" id="first_name" name="first_name" value="{{user_detail.first_name}}">
                            
                         </div>
                         </div>
                         <div class="col-md-6">
                         <div class="input-group input-group-static">
                            <label class="bmd-label-floating">Last Name</label>
-                           <input type="text" class="form-control" value="{{lastname}}" name="last name" required="" id="lastname">
+                           <input type="text" class="form-control" id="last_name" value="{{user_detail.last_name}}" name="last_name" required="" id="lastname">
                           
                         </div>
                         </div>
@@ -41,7 +51,7 @@
                         <div class="col-md-6">
                         <div class="input-group input-group-static">
                            <label class="bmd-label-floating">Email address</label>
-                           <input type="email" value="{{email}}" name="email" required="" class="form-control">
+                           <input type="email" value="{{user_detail.email}}" id="email" name="email" required="" class="form-control">
                             
                             
                         </div>
@@ -50,7 +60,7 @@
                          <div class="col-md-6">
                         <div class="input-group input-group-static">
                            <label class="bmd-label-floating">Password</label>
-                           <input type="password" class="form-control"  name="password" value="{{password}}" >
+                           <input type="password" class="form-control" id="password" name="password" value="{{user_detail.password}}" >
                            
                         </div>
                         </div>
@@ -60,7 +70,7 @@
                         <div class="col-md-4">
                         <div class="input-group input-group-static">
                            <label class="bmd-label-floating">Phone Number</label>
-                           <input type="text" class="form-control" value="{{phone}}" name="phone" required="">
+                           <input type="text" class="form-control" id="mobile" value="{{user_detail.mobile}}" name="mobile" required="">
                             
                         </div>
                         </div>
@@ -68,7 +78,7 @@
                         <div class="col-md-8">
                         <div class="input-group input-group-static">
                            <label class="bmd-label-floating">Address</label>
-                           <input type="text" class="form-control" value="{{address}}" name="address">
+                           <input type="text" class="form-control" id="address" value="{{user_detail.address}}" name="address">
                             
                         </div>
                         </div>
@@ -84,21 +94,21 @@
 
             <div class="col-md-4">
                <div class="card card-profile">
-                  <div class="card-avatar">
-                   <img src="" alt="img">
+                  <div class="card-avatar" >
+                   <img src="{{user_detail.image.url}}" alt="img" style="width:30%; height:auto; border-radius:100%;" >
 
                   </div>
                   <div class="card-body">
                   <h6 class="card-category text-gray">Welcome</h6>
-                  <h4 class="card-title">Name</h4>
+                  <h4 class="card-title">{{user_detail.first_name}}</h4>
 
-                  <form id="change-image" action="" method="post" enctype="multipart/form-data">
-                     
+                  <form id="change-image" action="{% url 'updateimage' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
                        <span class="btn btn-round btn-rose btn-file">
                            <span class="fileinput-new">Change Photo</span>
                            <span class="fileinput-exists">Change</span>
-                           <input type="file" class="image-change" name="photo" id="imgupload" required=""/>
-                           <input type="hidden" name="rowid" required="" value="" />
+                           <input type="file" class="btn bg-gradient-primary mb-0 mt-0 mt-md-n6 mt-lg-0 image-change" name="image" id="image" value="{{user_detail.image}}" required />
+                           <input type="hidden" name="user_id" required="" value="{{user_detail.id}}" />
                        </span>  
                    </form>
                   </div>
@@ -108,6 +118,7 @@
     </div>
   </div>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script type="text/javascript">
      $(document).ready(function(){
       $('.image-change').change(function(){
@@ -122,6 +133,8 @@
                 return false;
             }
         });
+
+        
 });
   </script>
 

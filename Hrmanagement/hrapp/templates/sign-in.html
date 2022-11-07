@@ -21,6 +21,7 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{% static '/css/material-dashboard.css' %}" rel="stylesheet" />
+  
 </head>
 
 <body class="bg-gray-200">
@@ -43,6 +44,18 @@
                   <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
                 </div>
               </div>
+              <br>
+              {% if messages %}
+              {% for message in messages %}
+    
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>Invalid Email Or Password</strong> 
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">✘</button>
+              </div>
+
+               {% endfor %}
+               {% endif %}
+
               <div class="card-body">
                 <form role="form" class="text-start"  action= "{% url 'signin' %}" method="POST" enctype="multipart/form-data">
                   {% csrf_token %}
@@ -50,10 +63,9 @@
                     <label class="form-label">Email</label>
                     <input type="email" class="form-control" name="email" id="email">
                   </div>
-
                   <span class="usererror" style="color: red;"></span>
 
-                  <div class="input-group input-group-outline mb-3">
+                  <div class="input-group input-group-outline my-3">
                     <label class="form-label">Password</label>
                     <input type="password" class="form-control" name="password" id="password"> 
                   </div>
@@ -108,6 +120,8 @@
 
         });
        
+    
+
         $('#email').keyup(function(){
          var email = $(this).val();
          if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email))  

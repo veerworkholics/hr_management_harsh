@@ -14,4 +14,10 @@ class Customuser(models.Model):
   created_at=models.DateField()
   updated_at=models.DateField()
 
+class Role(models.Model):
+  role_name=models.CharField(max_length=100)
+  status=models.IntegerField()
+  created_at=models.DateTimeField()
+  updated_at=models.DateTimeField()
+
 
